@@ -1,0 +1,26 @@
+export interface Token {
+  address: string;
+  symbol: string;
+  name: string;
+  decimals: number;
+  balance: string;
+}
+
+export interface SwapToken {
+  token: Token;
+  amount: string;
+  selected: boolean;
+  expectedOutput?: string;
+  priceImpact?: number;
+  loading?: boolean;
+}
+
+export interface Transaction {
+  hash: string;
+  status: 'pending' | 'success' | 'failed';
+  timestamp: number;
+  tokens: {
+    input: { symbol: string; amount: string; address: string };
+    output: { symbol: string; amount: string; address: string };
+  };
+}
