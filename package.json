@@ -1,7 +1,7 @@
 {
   "name": "aptos-batch-swap",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.0", 
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,10 +11,9 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@aptos-labs/aptos": "^1.14.0",
-    "@aptos-labs/wallet-adapter-react": "^1.4.0",
-    "@aptos-labs/wallet-adapter-core": "^1.4.0",
-    "petra-plugin-wallet-adapter": "^1.0.2",
+    "aptos": "^1.21.0",
+    "@aptos-labs/wallet-adapter": "latest",
+    "petra-plugin-wallet-adapter": "latest",
     "react-toastify": "^9.1.3",
     "framer-motion": "^10.16.4",
     "lucide-react": "^0.294.0"
@@ -22,7 +21,7 @@
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
-    "@vitejs/plugin-react": "^4.1.1",
+    "@vitejs/plugin-react": "^4.1.1", 
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
     "tailwindcss": "^3.3.5",
