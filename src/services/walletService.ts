@@ -4,6 +4,8 @@ import { Token } from '../types';
 const aptosConfig = new AptosConfig({ network: Network.TESTNET });
 const aptos = new Aptos(aptosConfig);
 
+export const APTOS_COIN_ADDRESS = '0x1::aptos_coin::AptosCoin';
+
 export class WalletService {
   static async getTokenBalances(address: string): Promise<Token[]> {
     try {
@@ -39,7 +41,7 @@ export class WalletService {
 
       return tokens;
     } catch (error) {
-      console.error('Error fetching balances:', error);
+      console.error('Error fetching token balances:', error);
       throw error;
     }
   }
@@ -77,8 +79,12 @@ export class WalletService {
   static async addTokenByAddress(address: string): Promise<Token> {
     const metadata = await this.getTokenMetadata(address);
     if (!metadata) {
-      throw new Error('Token not found');
+      throw new Error('Invalid token address or token not found');
     }
     return { ...metadata, balance: '0' };
+  }
+
+  static isAptToken(token: Token): boolean {
+    return token.address === APTOS_COIN_ADDRESS;
   }
 }
