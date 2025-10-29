@@ -5,7 +5,7 @@ import { useAppStore } from '../store/useAppStore';
 import { DexService } from '../services/dexService';
 import { TransactionService } from '../services/transactionService';
 import { formatAmount } from '../utils/formatters';
-import { Swap, AlertTriangle, Loader2, Settings } from 'lucide-react';
+import { ArrowRightLeft, AlertTriangle, Loader2, Settings } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 export const BatchSwapForm: React.FC = () => {
@@ -58,16 +58,16 @@ export const BatchSwapForm: React.FC = () => {
       for (const swapToken of selectedTokens) {
         if (!shouldContinue) break;
 
-        // Skip jika sama dengan APT
+        
         if (swapToken.token.address === aptToken.address) continue;
 
-        // Check price impact
+        
         if (swapToken.priceImpact && swapToken.priceImpact > swapConfig.maxPriceImpact) {
           toast.warn(`Skipping ${swapToken.token.symbol} - price impact too high (${swapToken.priceImpact.toFixed(2)}%)`);
           continue;
         }
 
-        // Create transaction dengan hash unik
+        
         const transactionId = `pending_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
         const transaction = {
           hash: transactionId,
@@ -103,7 +103,7 @@ export const BatchSwapForm: React.FC = () => {
             aptToken.decimals
           );
 
-          // Update transaction dengan hash real
+          
           removeTransaction(transactionId);
           addTransaction({
             ...transaction,
@@ -113,7 +113,7 @@ export const BatchSwapForm: React.FC = () => {
 
           toast.info(`🔄 Swapping ${swapToken.token.symbol}...`);
 
-          // Tunggu transaction dengan retry logic
+          
           await TransactionService.waitForTransaction(hash, 30000, 3);
           const status = await TransactionService.getTransactionStatus(hash);
           updateTransaction(hash, status);
@@ -140,16 +140,14 @@ export const BatchSwapForm: React.FC = () => {
           }
         }
 
-        // Delay antar swaps
         if (swapConfig.delayBetweenSwaps > 0 && shouldContinue) {
           await new Promise(resolve => setTimeout(resolve, swapConfig.delayBetweenSwaps));
         }
       }
 
-      // Refresh balances setelah semua swaps
       await refreshBalances(account.address);
       
-      // Show final summary
+      
       if (successfulSwaps > 0) {
         toast.success(`🎉 Batch swap completed! ${successfulSwaps} successful, ${failedSwaps} failed`);
       } else if (failedSwaps > 0) {
@@ -169,11 +167,11 @@ export const BatchSwapForm: React.FC = () => {
   if (selectedTokens.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center border border-gray-100 dark:border-gray-700">
-        <Swap size={48} className="mx-auto text-gray-400 mb-4" />
+        <ArrowRightLeft size={48} className="mx-auto text-gray-400 mb-4" />
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
           No tokens selected for swap
         </h3>
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="text-gray-500 dark:text-gray-40Messageg-400">
           Select tokens and enter amounts to start batch swapping to APT
         </p>
       </div>
@@ -185,7 +183,7 @@ export const BatchSwapForm: React.FC = () => {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
-            <Swap size={24} className="text-blue-600 dark:text-blue-400" />
+            <ArrowRightLeft size={24} className="text-blue-600 dark:text-blue-400" />
           </div>
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -325,7 +323,7 @@ export const BatchSwapForm: React.FC = () => {
           {isLoading ? (
             <Loader2 size={20} className="animate-spin" />
           ) : (
-            <Swap size={20} />
+            <ArrowRightLeft size={20} />
           )}
           {hasHighPriceImpact ? 'Adjust Amounts' : 'Confirm Batch Swap'}
         </button>
