@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { AptosWalletAdapterProvider } from '@aptos-labs/wallet-adapter-react';
-import { PetraWallet } from 'petra-plugin-wallet-adapter';
+import { PetraWallet } from '@aptos-labs/wallet-adapter-react';
 import { useAppStore } from './store/useAppStore';
 import { WalletConnect } from './components/WalletConnect';
 import { TokenList } from './components/TokenList';
