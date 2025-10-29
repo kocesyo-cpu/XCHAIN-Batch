@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network, AccountAddress } from 'aptos';
+import { Aptos, AptosConfig, Network, AccountAddress } from '@aptos-labs/ts-sdk';
 import { Token } from '../types';
 import { APTOS_COIN_ADDRESS } from './walletService';
 
