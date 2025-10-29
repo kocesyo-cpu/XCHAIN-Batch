@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network, AccountAddress } from '@aptos-labs/aptos';
+import { Aptos, AptosConfig, Network, AccountAddress } from 'aptos';
 import { Token } from '../types';
 
 const aptosConfig = new AptosConfig({ network: Network.TESTNET });
