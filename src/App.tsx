@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AptosWalletAdapterProvider } from '@aptos-labs/wallet-adapter-react';
-import { PetraWallet } from '@aptos-labs/wallet-adapter-react';
 import { useAppStore } from './store/useAppStore';
 import { WalletConnect } from './components/WalletConnect';
 import { TokenList } from './components/TokenList';
@@ -8,8 +7,6 @@ import { BatchSwapForm } from './components/BatchSwapForm';
 import { TransactionHistory } from './components/TransactionHistory';
 import { ToastNotifications } from './components/ToastNotifications';
 import { Moon, Sun, Github, Wallet, Loader2, Info } from 'lucide-react';
-
-const wallets = [new PetraWallet()];
 
 function AppContent() {
   const { isDarkMode, toggleDarkMode, isLoading, transactions } = useAppStore();
@@ -23,7 +20,6 @@ function AppContent() {
     }
   }, [isDarkMode]);
 
-  // Hitung pending transactions yang real (bukan dummy pending_* hash)
   const realPendingCount = transactions.filter(tx => 
     tx.status === 'pending' && !tx.hash.startsWith('pending_')
   ).length;
@@ -49,7 +45,6 @@ function AppContent() {
             </div>
 
             <div className="flex items-center gap-4">
-              {/* Loading Indicator untuk general loading */}
               {isLoading && (
                 <div className="flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400">
                   <Loader2 size={16} className="animate-spin" />
@@ -57,7 +52,6 @@ function AppContent() {
                 </div>
               )}
 
-              {/* Real Pending Transactions Count dengan Tooltip */}
               {realPendingCount > 0 && (
                 <div 
                   className="relative"
@@ -70,7 +64,6 @@ function AppContent() {
                     <Info size={14} className="text-amber-500" />
                   </div>
 
-                  {/* Tooltip */}
                   {showTooltip && (
                     <div className="absolute top-full right-0 mt-2 w-64 p-3 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg shadow-xl z-50">
                       <div className="font-medium mb-1">Pending Transactions</div>
@@ -111,17 +104,14 @@ function AppContent() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left Column - Token List & Batch Swap */}
           <div className="space-y-8">
             <TokenList />
             <BatchSwapForm />
           </div>
 
-          {/* Right Column - Transaction History */}
           <div className="space-y-8">
             <TransactionHistory />
             
-            {/* Info Panel */}
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 💡 How to Use
@@ -198,7 +188,6 @@ function AppContent() {
 function App() {
   return (
     <AptosWalletAdapterProvider 
-      plugins={wallets} 
       autoConnect={true}
       onError={(error) => {
         console.log('Wallet error:', error);
