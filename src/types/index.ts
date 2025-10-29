@@ -4,6 +4,7 @@ export interface Token {
   name: string;
   decimals: number;
   balance: string;
+  logo?: string;
 }
 
 export interface SwapToken {
@@ -20,7 +21,14 @@ export interface Transaction {
   status: 'pending' | 'success' | 'failed';
   timestamp: number;
   tokens: {
-    input: { symbol: string; amount: string; address: string };
-    output: { symbol: string; amount: string; address: string };
+    input: { symbol: string; amount: string; address: string; decimals: number };
+    output: { symbol: string; amount: string; address: string; decimals: number };
   };
+  gasUsed?: string;
+}
+
+export interface BatchSwapConfig {
+  stopOnError: boolean;
+  delayBetweenSwaps: number;
+  maxPriceImpact: number;
 }
