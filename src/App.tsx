@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { AptosWalletAdapterProvider } from '@aptos-labs/wallet-adapter-react';
+import { AptosWalletAdapterProvider, Wallet } from '@aptos-labs/wallet-adapter-react';
+import { PetraWallet } from '@petra-wallet/adapter-plugin';
+import { MartianWallet } from '@martianwallet/aptos-wallet-adapter';
 import { useAppStore } from './store/useAppStore';
 import { WalletConnect } from './components/WalletConnect';
 import { TokenList } from './components/TokenList';
 import { BatchSwapForm } from './components/BatchSwapForm';
 import { TransactionHistory } from './components/TransactionHistory';
 import { ToastNotifications } from './components/ToastNotifications';
-import { Moon, Sun, Github, Wallet, Loader2, Info } from 'lucide-react';
+import { Moon, Sun, Github, Wallet as WalletIcon, Loader2, Info } from 'lucide-react';
+
+const plugins: Wallet[] = [
+  new PetraWallet(),
+  new MartianWallet(),
+];
 
 function AppContent() {
   const { isDarkMode, toggleDarkMode, isLoading, transactions } = useAppStore();
@@ -20,23 +27,22 @@ function AppContent() {
     }
   }, [isDarkMode]);
 
-  const realPendingCount = transactions.filter(tx => 
+  const realPendingCount = transactions.filter(tx =>
     tx.status === 'pending' && !tx.hash.startsWith('pending_')
   ).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      {/* Header */}
       <header className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
-                <Wallet size={20} />
+                <WalletIcon size={20} />
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900 dark:text-white">
-                  Aptos Batch Swap
+                  XCHAIN DEX
                 </h1>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   Multi-token swapping made easy
@@ -53,7 +59,7 @@ function AppContent() {
               )}
 
               {realPendingCount > 0 && (
-                <div 
+                <div
                   className="relative"
                   onMouseEnter={() => setShowTooltip(true)}
                   onMouseLeave={() => setShowTooltip(false)}
@@ -68,7 +74,7 @@ function AppContent() {
                     <div className="absolute top-full right-0 mt-2 w-64 p-3 bg-gray-900 dark:bg-gray-700 text-white text-sm rounded-lg shadow-xl z-50">
                       <div className="font-medium mb-1">Pending Transactions</div>
                       <p className="text-gray-300">
-                        These transactions are being processed on the Aptos blockchain. 
+                        These transactions are being processed on the Aptos blockchain.
                         They will automatically update once confirmed.
                       </p>
                       <div className="absolute -top-1 right-3 w-2 h-2 bg-gray-900 dark:bg-gray-700 transform rotate-45"></div>
@@ -76,7 +82,7 @@ function AppContent() {
                   )}
                 </div>
               )}
-              
+
               <button
                 onClick={toggleDarkMode}
                 className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -84,9 +90,9 @@ function AppContent() {
               >
                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>
-              
+
               <a
-                href="https://github.com/your-repo"
+                href="https://github.com/ixuxoinzo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -101,7 +107,6 @@ function AppContent() {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="space-y-8">
@@ -111,7 +116,7 @@ function AppContent() {
 
           <div className="space-y-8">
             <TransactionHistory />
-            
+
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 💡 How to Use
@@ -143,12 +148,11 @@ function AppContent() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-gray-500 dark:text-gray-400">
-              © 2024 Aptos Batch Swap. Built on Aptos Testnet.
+              © 2025 XCHAIN DEX. Built on Aptos Testnet.
             </div>
             <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
               <a 
@@ -168,7 +172,7 @@ function AppContent() {
                 Aptos Docs
               </a>
               <a 
-                href="https://github.com/your-repo/issues" 
+                href="https://github.com/ixuxoinzo" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
@@ -187,7 +191,8 @@ function AppContent() {
 
 function App() {
   return (
-    <AptosWalletAdapterProvider 
+    <AptosWalletAdapterProvider
+      plugins={plugins}
       autoConnect={true}
       onError={(error) => {
         console.log('Wallet error:', error);
