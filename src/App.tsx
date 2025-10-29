@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AptosWalletAdapterProvider, Wallet } from '@aptos-labs/wallet-adapter-react';
-import { PetraWallet } from '@petra-wallet/adapter-plugin';
+import { PetraWallet } from 'petra-plugin-wallet-adapter';
 import { MartianWallet } from '@martianwallet/aptos-wallet-adapter';
 import { useAppStore } from './store/useAppStore';
 import { WalletConnect } from './components/WalletConnect';
