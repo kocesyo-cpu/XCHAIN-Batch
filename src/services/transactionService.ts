@@ -1,4 +1,4 @@
-import { Aptos, AptosConfig, Network } from '@aptos-labs/aptos';
+import { Aptos, AptosConfig, Network } from 'aptos';
 
 const aptosConfig = new AptosConfig({ network: Network.TESTNET });
 const aptos = new Aptos(aptosConfig);
